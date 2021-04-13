@@ -4,17 +4,49 @@ title:  "백준 알고리즘 1일차"
 date:   2021-04-14 01:30:00 +0900
 categories: jekyll update
 ---
-#백준 알고리즘 1일차[Q1473]
+# 백준 알고리즘 1일차[Q1473]
   
-##문제
+## 문제
 <img src="/public/img/1473_문제.png" width="100%" height="100%" title="px(픽셀) 크기 설정" alt="RubberDuck"></img>
-##입력
+## 입력
 <img src="/public/img/1473_입력.png" width="100%" height="100%" title="px(픽셀) 크기 설정" alt="RubberDuck"></img>
-##출력
+## 출력
 <img src="/public/img/1473_출력.png" width="100%" height="100%" title="px(픽셀) 크기 설정" alt="RubberDuck"></img>
+## 풀이
+시작점을 알 수 없으므로 (N,N)으로 가정한다.
+
+문제에서 최대 길이는 N이고 (N,N)에서 N만큼 이동한다고 가정했을 때, 0 또는 2N 까지 이동 가능하다.
+
+그러므로 2N+1 만큼의 배열 사이즈를 X축과 Y축에 할당한다.
+
+이동되는 좌표만 .으로 변경되므로 그 외의 모든 좌표는 #(벽)으로 가정한다
+
+<img src="/public/img/1473_해설1.png" width="100%" height="100%" title="px(픽셀) 크기 설정" alt="RubberDuck"></img>
+
+현재 좌표에서 바라보는 방향을 dir라는 변수로 두었다.
+
+이 변수는 북: 0, 동: 1, 남: 2, 서: 3, 즉 동서남북 4방위를 시계방향 기준 0~3으로 표현했다.
+
+최초 방향은 남쪽이므로 dir은 2 값을 갖는다.
+<img src="/public/img/1473_해설2.png" width="100%" height="100%" title="px(픽셀) 크기 설정" alt="RubberDuck"></img>
+
+본격적으로 값을 입력받아 문제를 해결해보자.
+
+입력 값 R과 L은 방향을 변경한다. R은 오른쪽 방향, L은 왼쪽 방향으로 90도 회전함을 나타낸다. 그러므로 R일 땐 dir+1, L일 땐 dir-1을 한다.
+
+다만 이 과정에서 dir+1가 0~3을 초과할 수 있으므로 (dir+1)%4 하여 범위 내 값을 갖도록 한다.
+
+마찬가지로 dir-1이 0~3보다 더 작은 값을 갖을 수 있으므로 (dir-1)%4를 하지만, 음수 %4는 음수값을 갖으므로 4를 더하여 계산한다. (4+dir-1)%4
+
+<img src="/public/img/1473_해설3.png" width="100%" height="100%" title="px(픽셀) 크기 설정" alt="RubberDuck"></img>
+
+입력 값 F가 올 때는, dir의 값에 따라 X,Y 좌표를 변경한다. 이 때에 범위를 한정짓기 위해 X와 Y의 최대/최소 값을 비교하여 저장한다.
+
+X와 Y의 최대/최소값이 최종 출력할 배열의 X,Y 범위가 된다.
+
+이해를 돕기 위해 하단에 코드 전문을 업로드하였다.
 
 {% highlight ruby %}
-'''c
 #include<iostream>
 #include<vector>
 #include<algorithm>
@@ -22,44 +54,61 @@ categories: jekyll update
 using namespace std;
 
 int main() {
-	int N = 0; int xMAX, yMAX, xMIN, yMIN, dir;
-	
-	dir = 2; //0:북 1:동 2:남 3:서 방향
-	scanf("%d", &N);
-	vector<vector<char>> graph(2 * N+1, vector<char>(2 * N+1, '#'));
+	//길이 값 저장
+	int N = 0;
+	//X와 Y의 최대/최소값 저장, dir은 방향 값을 저장
+	int xMAX, yMAX, xMIN, yMIN, dir;
+	//X와 Y의 좌표를 기억하기 위한 변수
 	int x, y;
+
+	//0:북 1:동 2:남 3:서 방향 / 최초 방향은 남향이므로 dir=2
+	dir = 2; 
+
+	scanf("%d", &N);
+	
+	// (2N+1,2N+1) 배열 생성
+	vector<vector<char>> graph(2 * N+1, vector<char>(2 * N+1, '#'));
+	
+	//(N,N)을 시작점으로 지정하고 시작점은 # -> .로 변경(이동 가능한 위치이므로)
 	x = y = N;
-	//벡터에 값 저장
 	graph[x][y] = '.';
+
+	//시작점이 N이므로 N을 기준으로 하여 최대/최소값을 찾는다.
 	xMAX = yMAX = xMIN = yMIN = N;
 	for (int i = 0; i < N; i++)
 	{
-		//printf("xMIN: %d / xMAX: %d\n yMIN: %d / yMAX: %d\n",xMIN,xMAX,yMIN,yMAX);
-
 		char ch = ' ';
 		scanf(" %c", &ch);
+
+		//우측 방향일 때
 		if (ch == 'R')
 			dir = (dir + 1) % 4;
+		//좌측 방향일 때
 		else if (ch == 'L')
 			dir = (4+dir - 1) % 4;
+		//전진일 때
 		else {
 			switch (dir)
 			{
-			case 0:
+			//북향
+			case 0: 
 				y = y - 1;
 				graph[y][x] = '.';
 				yMIN = min(y, yMIN);
 				break;
+			//동향
 			case 1:
 				x = x + 1;
 				graph[y][x] = '.';
 				xMAX = max(x, xMAX);
 				break;
+			//남향
 			case 2:
 				y = y + 1;
 				graph[y][x] = '.';
 				yMAX = max(y, yMAX);
 				break;
+			//서향
 			case 3:
 				x = x - 1;
 				graph[y][x] = '.';
@@ -68,6 +117,8 @@ int main() {
 			}
 		}
 	}
+
+	//최종 결과 출력
 	for (int i = yMIN; i <= yMAX; i++)
 	{
 		for (int j = xMIN; j <= xMAX; j++)
@@ -77,7 +128,7 @@ int main() {
 
 	}
 }
-'''
+
 {% endhighlight %}
 
 Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll’s GitHub repo][jekyll-gh]. If you have questions, you can ask them on [Jekyll Talk][jekyll-talk].
