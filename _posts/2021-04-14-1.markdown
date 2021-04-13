@@ -14,11 +14,70 @@ categories: jekyll update
 <img src="/public/img/1473_출력.png" width="100%" height="100%" title="px(픽셀) 크기 설정" alt="RubberDuck"></img>
 
 {% highlight ruby %}
-def print_hi(name)
-  puts "Hi, #{name}"
-end
-print_hi('Tom')
-#=> prints 'Hi, Tom' to STDOUT.
+'''c
+#include<iostream>
+#include<vector>
+#include<algorithm>
+#pragma warning(disable:4996)
+using namespace std;
+
+int main() {
+	int N = 0; int xMAX, yMAX, xMIN, yMIN, dir;
+	
+	dir = 2; //0:북 1:동 2:남 3:서 방향
+	scanf("%d", &N);
+	vector<vector<char>> graph(2 * N+1, vector<char>(2 * N+1, '#'));
+	int x, y;
+	x = y = N;
+	//벡터에 값 저장
+	graph[x][y] = '.';
+	xMAX = yMAX = xMIN = yMIN = N;
+	for (int i = 0; i < N; i++)
+	{
+		//printf("xMIN: %d / xMAX: %d\n yMIN: %d / yMAX: %d\n",xMIN,xMAX,yMIN,yMAX);
+
+		char ch = ' ';
+		scanf(" %c", &ch);
+		if (ch == 'R')
+			dir = (dir + 1) % 4;
+		else if (ch == 'L')
+			dir = (4+dir - 1) % 4;
+		else {
+			switch (dir)
+			{
+			case 0:
+				y = y - 1;
+				graph[y][x] = '.';
+				yMIN = min(y, yMIN);
+				break;
+			case 1:
+				x = x + 1;
+				graph[y][x] = '.';
+				xMAX = max(x, xMAX);
+				break;
+			case 2:
+				y = y + 1;
+				graph[y][x] = '.';
+				yMAX = max(y, yMAX);
+				break;
+			case 3:
+				x = x - 1;
+				graph[y][x] = '.';
+				xMIN = min(x, xMIN);
+				break;
+			}
+		}
+	}
+	for (int i = yMIN; i <= yMAX; i++)
+	{
+		for (int j = xMIN; j <= xMAX; j++)
+		{
+			printf("%c", graph[i][j]);
+		}printf("\n");
+
+	}
+}
+'''
 {% endhighlight %}
 
 Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll’s GitHub repo][jekyll-gh]. If you have questions, you can ask them on [Jekyll Talk][jekyll-talk].
