@@ -1,15 +1,15 @@
-# Global
-*.DS_Store
-Desktop.ini
-Thumbs.db
+# hidden files
+.*
+!.github
 
-# Project
-!.keep
-*.sass-cache
-/_assets/yarn/
-/_site/
-/.jekyll-cache/
+# bundler cache
+_site
+vendor
 Gemfile.lock
+
+# rubygem
+*.gem
+
+# npm dependencies
+node_modules
 package-lock.json
-yarn.lock
-.idea

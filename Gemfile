@@ -1,14 +1,19 @@
+# frozen_string_literal: true
+
 source "https://rubygems.org"
 
-gem "autoprefixer-rails"
-gem "html-proofer"
-gem "image_optim"
-gem "jekyll", '3.8.6'
-gem "jekyll-assets"
-gem "jekyll-paginate"
-gem "jekyll-sitemap"
-gem "jemoji"
-gem "mini_magick"
-gem "sass"
-gem "sprockets", "~> 3.7"
-gem "uglifier"
+gemspec
+
+group :test do
+  gem "html-proofer", "~> 3.18"
+end
+
+# Windows and JRuby does not include zoneinfo files, so bundle the tzinfo-data gem
+# and associated library.
+install_if -> { RUBY_PLATFORM =~ %r!mingw|mswin|java! } do
+  gem "tzinfo", "~> 1.2"
+  gem "tzinfo-data"
+end
+
+# Performance-booster for watching directories on Windows
+gem "wdm", "~> 0.1.1", :install_if => Gem.win_platform?

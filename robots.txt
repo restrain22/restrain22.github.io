@@ -1,5 +1,10 @@
-# www.robotstxt.org/
+---
+permalink: robots.txt
+# The robots rules
+---
 
-# Allow crawling of all content
 User-agent: *
-Disallow:
+
+Disallow: /norobots/
+
+Sitemap: {{ '/sitemap.xml' | absolute_url }}

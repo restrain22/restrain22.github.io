@@ -1,17 +1,21 @@
 ---
-title: "Page not found"
-description: "Page not found"
+layout: page
+title: "404: Page not found"
 permalink: /404.html
-sitemap: false
-layout: default
+
+redirect_from:
+  - /norobots/
+  - /assets/
+  - /posts/
+
+dynamic_title: true
 ---
 
-<div class="notfound-wrapper">
-  <div class="notfound-content">
-    <p>
-      Looks like you got lost.
-      <br>
-      Let's get you back to the <a href="{{ '/' | relative_url }}">homepage</a>!
-    </p>
-  </div>
+<div class="lead">
+  <p>Sorry, we've misplaced that URL or it's pointing to something that doesn't exist. </p>
+  <p>
+    <a href="{{ '/' | relative_url }}">Head back Home</a>
+    to try finding it again, or search for it on the
+    <a href="{{ 'archives' | relative_url }}">Archives page</a>.
+  </p>
 </div>
