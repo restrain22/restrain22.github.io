@@ -7,11 +7,11 @@ categories: jekyll update
 # 백준 알고리즘 1일차[Q1473]
   
 ## 문제
-<img src="/public/img/1473_문제.png" width="100%" height="100%" title="px(픽셀) 크기 설정" alt="RubberDuck"></img>
+<img src="/public/img/1473_문제.png" width="100%" height="100%" title="px(픽셀) 크기 설정" alt="1473_문제">
 ## 입력
-<img src="/public/img/1473_입력.png" width="100%" height="100%" title="px(픽셀) 크기 설정" alt="RubberDuck"></img>
+<img src="/public/img/1473_입력.png" width="100%" height="100%" title="px(픽셀) 크기 설정" alt="1473_입력">
 ## 출력
-<img src="/public/img/1473_출력.png" width="100%" height="100%" title="px(픽셀) 크기 설정" alt="RubberDuck"></img>
+<img src="/public/img/1473_출력.png" width="100%" height="100%" title="px(픽셀) 크기 설정" alt="1473_출력">
 ## 풀이
 시작점을 알 수 없으므로 (N,N)으로 가정한다.
 
@@ -21,14 +21,14 @@ categories: jekyll update
 
 이동되는 좌표만 .으로 변경되므로 그 외의 모든 좌표는 #(벽)으로 가정한다
 
-<img src="/public/img/1473_해설1.png" width="100%" height="100%" title="px(픽셀) 크기 설정" alt="RubberDuck"></img>
+<img src="/public/img/1473_해설1.png" width="10%" height="100%" title="px(픽셀) 크기 설정" alt="1473_해설1">
 
 현재 좌표에서 바라보는 방향을 dir라는 변수로 두었다.
 
 이 변수는 북: 0, 동: 1, 남: 2, 서: 3, 즉 동서남북 4방위를 시계방향 기준 0~3으로 표현했다.
 
 최초 방향은 남쪽이므로 dir은 2 값을 갖는다.
-<img src="/public/img/1473_해설2.png" width="100%" height="100%" title="px(픽셀) 크기 설정" alt="RubberDuck"></img>
+<img src="/public/img/1473_해설2.png" width="20%" height="100%" title="px(픽셀) 크기 설정" alt="1473_해설2">
 
 본격적으로 값을 입력받아 문제를 해결해보자.
 
@@ -38,7 +38,7 @@ categories: jekyll update
 
 마찬가지로 dir-1이 0~3보다 더 작은 값을 갖을 수 있으므로 (dir-1)%4를 하지만, 음수 %4는 음수값을 갖으므로 4를 더하여 계산한다. (4+dir-1)%4
 
-<img src="/public/img/1473_해설3.png" width="100%" height="100%" title="px(픽셀) 크기 설정" alt="RubberDuck"></img>
+<img src="/public/img/1473_해설3.png" width="20%" height="100%" title="px(픽셀) 크기 설정" alt="1473_해설3">
 
 입력 값 F가 올 때는, dir의 값에 따라 X,Y 좌표를 변경한다. 이 때에 범위를 한정짓기 위해 X와 Y의 최대/최소 값을 비교하여 저장한다.
 
@@ -131,9 +131,5 @@ int main() {
 
 {% endhighlight %}
 
-Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll’s GitHub repo][jekyll-gh]. If you have questions, you can ask them on [Jekyll Talk][jekyll-talk].
 
-[Q1473]: https://www.acmicpc.net/problem/1347
-[jekyll-docs]: https://jekyllrb.com/docs/home
-[jekyll-gh]:   https://github.com/jekyll/jekyll
-[jekyll-talk]: https://talk.jekyllrb.com/
+백준 알고리즘 1일차[Q1473]: https://www.acmicpc.net/problem/1347
