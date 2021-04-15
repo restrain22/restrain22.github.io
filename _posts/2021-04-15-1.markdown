@@ -1,0 +1,80 @@
+---
+layout: post
+title:  "백준 알고리즘 2일차"
+date:   2021-04-15 01:30:00 +0900
+categories: jekyll update
+---
+# 백준 알고리즘 2일차[Q9012]
+  
+## 문제
+<img src="/public/img/9012_문제.png" width="100%" height="100%" title="px(픽셀) 크기 설정" alt="9012_문제">
+## 입력
+<img src="/public/img/9012_입력.png" width="100%" height="100%" title="px(픽셀) 크기 설정" alt="9012_입력">
+## 출력
+<img src="/public/img/9012_출력.png" width="100%" height="100%" title="px(픽셀) 크기 설정" alt="9012_출력">
+## 풀이
+'('와 ')'가 입력되었을 때, 짝이 맞는지 확인하는 문제이다.
+
+짝을 확인하기 위해 '()'를 매칭해야 하는데 '(())' 또는 '(()())' 처럼 '()'가 붙어서 오지 않는 경우에는 단순히 '(' 다음에 ')'를 오는지 체크하여 풀기 어렵다.
+
+그러므로 '('값이 오면 몇 번을 연속해서 오던지, 값을 저장할 필요가 있다. 여기서 값을 저장하기 위해 STACK을 사용하였다.
+
+STACK은 LIFO(Last In, First Out)형태로 나중에 들어온 값이 먼저 나간다. 이전에 '('가 몇 번을 들어오던지 값을 저장할 수 있다는 것이다.
+
+대신 ')'가 입력되면 이전의 '('와 매칭되어 하나의 '()'가 되므로 저장된 값으로부터 '('를 하나 빼야한다.
+
+STACk을 활용하여 '('가 오면 집어넣고 ')'가 오면 값을 빼 모든 개수를 확인했을 때 STACK이 비어있는지 확인하여 매칭 여부를 확인한다.
+
+입력받은 문자열의 길이보다 먼저 STACK이 비어있으면 ')'가 더 나왔으므로 매칭 실패이며, 문자열의 길이까지 확인했을 때 STACK에 값이 남아 있으면 '('가 더 많이 나왔으므로 이 또한 매칭 실패이다.
+
+이해를 돕기 위해 하단에 코드 전문을 업로드하였다.
+
+{% highlight ruby %}
+#include<iostream>
+#include<stack>
+#include<algorithm>
+#pragma warning(disable:4996)
+using namespace std;
+
+
+int main() {
+	
+	//테스트 횟수
+	int N = 0;
+	//입력 데이터
+	string str = " ";
+	//괄호가 정상인지 확인하기 위한 스택
+	stack<char> stack;
+	//성공/실패 여부 저장
+	int flag = 0;
+	scanf("%d", &N);
+	while (N--) {
+		scanf("%s", str);
+		for (int i = 0; i < str.size(); i++)
+		{
+			//(가 오면 stack에 push하고, )가 오면 스택에서 pop함
+			//스택이 비어 있는데 pop을 하면 안되므로 empty 체크를 먼저 함
+			if (str[i] == '(')
+				stack.push(str[i]);
+			else {
+				if (!stack.empty())
+					stack.pop();
+				else {
+					flag = false;
+					break;
+				}
+			}
+			flag = true;
+		}
+		if (flag) {
+			printf("YES\n");
+			continue;
+		}
+		printf("NO\n");
+	}
+
+}
+{% endhighlight %}
+
+
+백준 알고리즘 2일차[Q9012]: https://www.acmicpc.net/problem/9012
