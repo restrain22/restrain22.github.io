@@ -1,0 +1,109 @@
+---
+layout: post
+title:  "C++ split 함수 구현"
+date:   2021-04-15 01:30:00 +0900
+categories: jekyll update
+---
+# C++ split 함수 구현
+  
+프로그래머스 알고리즘 테스트 및 은행권 코테 시험을 치루며 하나의 언어에 대해 제대로 알아야 한다는 것을 다시 느꼈다.
+
+시험 중에 C#에서 구현되어 있는 split함수가 C++에도 당연히 있을 것이라 판단하고 문제를 해결하려고 접근하였지만
+
+없다는 사실을 알았거니와, 당혹스러움에 C#으로 급히 언어를 전환하여 문제 해결을 진행하였다.
+
+추후 알고리즘 테스트에 자주 쓰일 수 있는 split 함수를 직접 구현해봐야겠다고 느껴 고심했고 끝내 2가지 버전으로 구현했다.
+
+###vector<string> 반환형 split
+
+사실 제일 많이 쓰이는 문자열 배열을 반환하는 split 함수이다. C#으로 RPA 개발할 때에 유용하게 사용하여 C++로도 구현하고자 하였다.
+
+진행 순서를 먼저 정의해 보았다.
+
+ 1. split 함수에 사용될 기호(delimeter)의 위치를 찾는다.
+ 
+ 2. 0~X(delimter의 위치 index 값)까지 자른 문자열을 반환할 저장공간에 저장한다.
+ 
+ 3. 다음 가리킬 문자열을 X+length(delimter 문자열의 길이 값) ~ 문자열 끝까지를 줄인다.
+ 
+위 과정을 지속적으로 반복하여 해당 함수를 구현하기로 하였다.
+ 
+다만 구현 중 공백 문자에 대한 이슈가 있어 해결 방법 하나를 추가하였다.
+ 
+string 헤더 파일에 remove라는 함수가 있는데 이 함수는 시작 위치, 끝 위치, 삭제할 값을 입력받는 함수이다.
+ 
+이 함수의 특징으로는 삭제할 값을 찾아 삭제하지만, 실제로 공간을 줄여주는 것이 아니라 삭제한 문자열의 위치로 다음 문자를 당겨오는 로직이었다.
+ 
+1 2 3 1 2 3 1 2 3 의 순서로 배열이 있다면 '2'를 기준으로 삭제했을 때, 1 3 1 3 1 3 1 2 3 처럼 삭제한 문자열만큼 뒤 문자를 당겨오고
+ 
+줄어들 길이 외의 공간은 원문 그대로 두는 것이다. 특이하게도 반환값이 삭제를 통해 잉여가 된 공간의 첫번째 위치를 가리킨다는 것이다.
+ 
+이를 통해 잉여 문자열을 삭제할 수 있었고, string.erase() 함수를 사용하여 string.end() 까지 문자열을 값 삭제 및 잉여 공간 삭제까지 할 수 있었다.
+
+string.erase를 하지 않는다면 잉여공간에 원치 않는 원문 값들이 출력되는 것을 확인할 수 있다.
+
+vector<int> 형의 split도 유사하게 구현되었다.
+
+이해를 돕기 위해 하단에 코드 전문을 업로드하였다.
+
+{% highlight ruby %}
+#include<iostream>
+#include<string>
+#include<vector>
+#include<algorithm>
+using namespace std;
+
+vector<string> split1(string str, string delimeter);
+vector<int> split(string str, string delimeter);
+int main() {
+
+	string str = "4x^6 + 3x^5 + 2x^4 + 1x^3 + 0x^2";
+	string delimeter = "+";
+	vector<string> result= split1(str, delimeter);
+	for (int i = 0; i < result.size(); i++)
+	{
+		cout << result[i] << endl;
+	}
+	vector<vector<int>> temp;
+	for (int i = 0;i < result.size();i++) {
+		temp.push_back(split(result[i],"x^"));
+		cout << temp[i][0] << " " << temp[i][1] << endl;
+	}
+
+}
+
+vector<string> split1(string str,string delimeter) {
+	vector<string> ret;
+	string token;
+	int pos = str.find(delimeter);
+	while (pos!=-1) {
+		token = str.substr(0, pos);
+		token.erase(remove(token.begin(), token.end(), ' '),token.end());
+		ret.push_back(token);
+		str = str.substr(pos+delimeter.length());
+		pos = str.find(delimeter);
+	}
+	str.erase(remove(str.begin(), str.end(), ' '), str.end());
+
+	ret.push_back(str);
+	return ret;
+}
+
+vector<int> split(string str, string delimeter) {
+	vector<int> vec;
+	string token;
+	while (str.find(delimeter) !=-1) {
+		int pos = str.find(delimeter);
+		token = str.substr(0, pos);
+		token.erase(remove(token.begin(), token.end(), ' '),token.end());
+		vec.push_back(stoi(token));
+		str = str.substr(pos + delimeter.length());
+	}
+	str.erase(remove(str.begin(), str.end(), ' '), str.end());
+	vec.push_back(stoi(str));
+	return vec;
+}
+{% endhighlight %}
+
+
+C++ split 함수 구현
