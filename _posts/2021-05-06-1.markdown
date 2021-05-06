@@ -5,6 +5,7 @@ date:   2021-05-06 11:30:00 +0900
 categories: jekyll update
 ---
 # 프로그래머스 완주하지 못한 선수  
+
   
 오늘은 자료구조부터 다시 공부하기로 하여 프로그래머스에서 해시 연습 문제를 확인했다.
 
@@ -14,7 +15,9 @@ C++에서 공식적으로 제공하는 해시테이블인 unordered_map 이라�
 
 같이 따라 나오는 map에 대해서도 간략하게 이해할 수 있었다.  
 
+
 ### unordered_map  
+
 
 unordered_map이란 C++에서 STL 표준으로 지정된 자료구조이다.
 
@@ -26,7 +29,9 @@ unordered_map은 해시테이블로 구현한 자료구조로 시간복잡도는
 
 사용법으로는 #include<unordered_map>을 선언해야 한다.  
 
+
 ### unordered_map 함수  
+
 
  1. 데이터 입력  
 	
@@ -36,9 +41,11 @@ unordered_map은 해시테이블로 구현한 자료구조로 시간복잡도는
 	
 	make_pair(key,value)를 활용하여 pair 형태로 추가한다.  
 	
+	
 {% highlight ruby %}
 insert(make_pair(key,value));
 {% endhighlight %}  
+
 
 	둘째. unordered_map은 키값을 접근만 해도 해당 키 값이 할당되어 하나의 공간을 가진다.
 	
@@ -46,15 +53,18 @@ insert(make_pair(key,value));
 	
 	그래서 위와 같이 선언한 후, unordered_map은["20210506"].count()로 키 값이 있는 지 검색하면 1이라는 카운트 수를 반환한다.  
 	
+	
  2. 데이터 삭제  
  
 	erase(key)를 사용하여 특정 키 값을 삭제할 수 있다.
 	
-	또한 claer()를 통해 전체 삭제가 가능하다.
+	또한 clear()를 통해 전체 삭제가 가능하다.
+	
 	
  3. key 존재 확인  
- 
+
 	key 존재를 확인하는 방법으로는 두 가지 방법이 있다.
+	
 	
 	첫째. find()
 	
@@ -62,17 +72,20 @@ insert(make_pair(key,value));
 	
 	iterator와 같이 front부터 end까지의 위치 중 해당하는 위치를 반환한다.
 	
+	
 	둘쨰. count()
 	
 	count(key)는 단순히 맵 안에 해당하는 key의 갯수를 반환하는 함수이다.
 	
 	중복을 허용하지 않으므로 반환 가능한 값은 1 또는 0 이다.  
 	
+	
  4. 크기 확인 함수  
  
 	맵의 크기 또는 비었는 지 확인할 수 있는 방법이 있다.
 	
 	size()는 현재 크기를, empty()는 맵이 비어있는지 확인하는 함수이다.  
+	
 	
 ### 문제 해설  
 
@@ -91,7 +104,9 @@ completion의 크기는 participant의 크리보다 반드시 1이 작다고 가
 
 이 값이 바로 return 값인 완주하지 못한 선수이다.  
 
+
 ### 소스 코드  
+
 
 1. 검색과 동시에 값 할당하기
 {% highlight ruby %}
@@ -133,6 +148,7 @@ string solution(vector<string> participant, vector<string> completion) {
 }
 
 {% endhighlight %}  
+
 
 2. 함수 사용하여 일일히 insert하기
 
