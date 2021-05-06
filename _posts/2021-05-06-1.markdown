@@ -35,11 +35,12 @@ unordered_map은 해시테이블로 구현한 자료구조로 시간복잡도는
 	첫째. insert()를 활용하는 방법이다.
 	
 	make_pair(key,value)를 활용하여 pair 형태로 추가한다.
-	{% highlight ruby %}
-	insert(make_pair(key,value));
-	{% endhighlight %}
+	
+{% highlight ruby %}
+insert(make_pair(key,value));
+{% endhighlight %}
 
-	둘쨰. unordered_map은 키값을 접근만 해도 해당 키 값이 할당되어 하나의 공간을 가진다.
+	둘째. unordered_map은 키값을 접근만 해도 해당 키 값이 할당되어 하나의 공간을 가진다.
 	
 	만약 unordered_map은["20210506"]; 와 같이 테이블 안에 키 값 "20210506"이 있는지 접근하면 공간을 할당해버린다.
 	
@@ -74,6 +75,7 @@ unordered_map은 해시테이블로 구현한 자료구조로 시간복잡도는
 	size()는 현재 크기를, empty()는 맵이 비어있는지 확인하는 함수이다.
 	
 ### 문제 해설
+
 
 문제를 풀면서 unordered_map에 대해 공부하는 시간을 갖았고, 습득한 지식을 활용하여 어떻게 문제를 해결할지 고민했다.
 
